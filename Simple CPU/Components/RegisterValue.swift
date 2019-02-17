@@ -28,6 +28,12 @@ extension ValueRepresentation {
     var isEven: Bool        { return (self.asUnsigned & 0x01) == 0 }
     var divisibleBy4: Bool  { return (self.asUnsigned & 0x011) == 0 }
     var signBit: Bool       { return self.asSigned < 0 }
+    var complement1: RegisterValue {
+        return self.asUnsigned ^ RegisterValue.max
+    }
+    var complement2: RegisterValue {
+        return complement1 &+ 1
+    }
 
     var evenParity: Bool {
         var bits = self.asUnsigned
