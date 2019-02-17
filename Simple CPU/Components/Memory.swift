@@ -8,6 +8,10 @@
 
 import Foundation
 
+// Should be big-endian.
+// * It matches the printed representation of registers
+// * It's less vulnerable to the bug of casting wide types into narrow by fetching only the first byte.
+
 class Memory {
     enum Errors: Error {
         case alignment(UInt32)
@@ -17,6 +21,7 @@ class Memory {
     let size: RegisterValue
     var data: Data
 
+    // MARK: - fetch/store byte
     func byte(at address: RegisterValue) throws -> RegisterValue {
         guard address < size else { throw Errors.access(address) }
         return RegisterValue(data[Int(address)])
@@ -27,7 +32,41 @@ class Memory {
         data[Int(address)] = UInt8(byte)
     }
 
-    
+    // MARK: - fetch/store half-word
+    func short(at address: RegisterValue) throws -> RegisterValue {
+        guard address < size else { throw Errors.access(address) }
+        let answer = try (0...1)
+            .reversed()
+            .map { try byte(at: address + $0) }
+            .reduce(0) {
+                ($0 << 8) | $1
+        }
+        return answer
+    }
+
+    func store(short: RegisterValue, at address: RegisterValue) throws {
+        let shortBytes = Array(short.bytes[2...3])
+        for (n, b) in shortBytes.enumerated() {
+            try store(byte: RegisterValue(b), at: address + UInt32(n))
+        }
+    }
+
+    // MARK: - fetch/store word (RegisterValue)
+    func word(at address: RegisterValue) throws -> RegisterValue {
+        let answer = try (0...3)
+            .reversed()
+            .map { try byte(at: address + $0) }
+            .reduce(0) {
+                ($0 << 8) | $1
+        }
+        return answer
+    }
+
+    func store(word: RegisterValue, at address: RegisterValue) throws {
+        for (n, b) in word.bytes.enumerated() {
+            try store(byte: RegisterValue(b), at: address + UInt32(n))
+        }
+    }
 
     init(size: RegisterValue) {
         self.size = size
