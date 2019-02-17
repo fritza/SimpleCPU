@@ -8,8 +8,18 @@
 
 import Foundation
 
-typealias RegisterValue = UInt32
+// MARK: - ValueRepresentation
+protocol ValueRepresentation {
+    var asSigned: SignedRegisterValue { get }
+    var asUnsigned: RegisterValue { get }
 
+    func hexString(flagged: HexFlag) -> String
+    var shorts: [UInt16] { get }
+    var bytes: [UInt8] { get }
+}
+
+
+// MARK: - HexFlag
 enum HexFlag: String, CaseIterable {
     case none = ""
     case hash = "#"
@@ -46,7 +56,9 @@ enum HexFlag: String, CaseIterable {
     }
 }
 
-extension RegisterValue {
+// MARK: - RegisterValue
+typealias RegisterValue = UInt32
+extension RegisterValue: ValueRepresentation {
     var bytes: [UInt8] {
         var retval: [UInt8] = []
         var cursor = self
@@ -63,13 +75,16 @@ extension RegisterValue {
         var retval: [UInt16] = []
         var cursor = self
 
-        for _ in 1...4 {
+        for _ in 1...2 {
             let short = [UInt16(self & 0x0ffff)]
             cursor >>= 16
             retval = short + retval
         }
         return retval
     }
+
+    var asSigned: SignedRegisterValue { return SignedRegisterValue(bitPattern: self) }
+    var asUnsigned: RegisterValue { return self }
 
     func hexString(flagged: HexFlag = .none) -> String {
         let width = MemoryLayout<RegisterValue>.size * 2
@@ -78,6 +93,20 @@ extension RegisterValue {
             flagged.rawValue
                 + String(repeating: "0", count: width - intermediate.count)
                 + intermediate
+    }
+}
+
+// MARK: - SignedRegisterValue
+typealias SignedRegisterValue = Int32
+extension SignedRegisterValue: ValueRepresentation {
+    // MARK: ValueRepresentation
+    var asSigned: SignedRegisterValue   { return self }
+    var asUnsigned: RegisterValue       { return RegisterValue(bitPattern: self) }
+    var bytes: [UInt8]                  { return self.asUnsigned.bytes }
+    var shorts: [UInt16]                { return self.asUnsigned.shorts }
+
+    func hexString(flagged: HexFlag = .none) -> String {
+        return asUnsigned.hexString(flagged: flagged)
     }
 }
 
