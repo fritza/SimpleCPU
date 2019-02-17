@@ -1,5 +1,5 @@
 //
-//  SecondViewController.swift
+//  ProcessorController.swift
 //  Simple CPU
 //
 //  Created by Fritz Anderson on 2/17/19.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SecondViewController: UIViewController {
+class ProcessorController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

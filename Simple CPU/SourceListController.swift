@@ -1,5 +1,5 @@
 //
-//  FirstViewController.swift
+//  SourceListController.swift
 //  Simple CPU
 //
 //  Created by Fritz Anderson on 2/17/19.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FirstViewController: UIViewController {
+class SourceListController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
