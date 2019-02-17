@@ -16,6 +16,7 @@
 		1F25699F2219D84800F53343 /* Simple_CPUTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F25699E2219D84800F53343 /* Simple_CPUTests.swift */; };
 		1F2569AB2219DD4600F53343 /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2569AA2219DD4600F53343 /* Register.swift */; };
 		1F2569AE2219F1ED00F53343 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2569AD2219F1ED00F53343 /* Memory.swift */; };
+		1F2569B02219F57000F53343 /* RegisterValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2569AF2219F57000F53343 /* RegisterValue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,7 @@
 		1F2569AA2219DD4600F53343 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
 		1F2569AC2219E02C00F53343 /* CPU.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = CPU.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		1F2569AD2219F1ED00F53343 /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
+		1F2569AF2219F57000F53343 /* RegisterValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterValue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 			children = (
 				1F2569AA2219DD4600F53343 /* Register.swift */,
 				1F2569AD2219F1ED00F53343 /* Memory.swift */,
+				1F2569AF2219F57000F53343 /* RegisterValue.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 				1F2569882219D84600F53343 /* AppDelegate.swift in Sources */,
 				1F2569AB2219DD4600F53343 /* Register.swift in Sources */,
 				1F2569AE2219F1ED00F53343 /* Memory.swift in Sources */,
+				1F2569B02219F57000F53343 /* RegisterValue.swift in Sources */,
 				1F25698A2219D84600F53343 /* ProcessorController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
