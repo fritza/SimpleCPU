@@ -112,8 +112,8 @@
 			isa = PBXGroup;
 			children = (
 				1F2569AA2219DD4600F53343 /* Register.swift */,
-				1F2569AD2219F1ED00F53343 /* Memory.swift */,
 				1F2569AF2219F57000F53343 /* RegisterValue.swift */,
+				1F2569AD2219F1ED00F53343 /* Memory.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
