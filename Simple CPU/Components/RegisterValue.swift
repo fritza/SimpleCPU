@@ -56,16 +56,26 @@ enum HexFlag: String, CaseIterable {
     case radix = "0x"
     case dollar = "$"
 
+    /// The one-character tags for numeric literals
     static let stringSet: CharacterSet = {
         let setString = "#$"
         return CharacterSet(charactersIn: setString)
     }()
 
+    /// All hexadecimal digits, plus the `_` convenience delimiter
     static let hexSet: CharacterSet = {
         return CharacterSet(charactersIn: "_0123456789ABCDEF")
     }()
 
     // TODO: Should throw
+    /// Turn a hex literal string into a `RegisterValue`.
+    ///
+    /// Allowed:
+    /// * Prefixes `#`, `$`, `0x`, or none
+    /// * Underscore (`_`) convenience delimiters
+    /// * Upper- or lower-case digits `A`–`F`
+    /// - Parameter string: The `String` to interpret
+    /// - Returns: The value of `string`, or `nil` if it can‘t be parsed.
     static func parse(_ string: String) -> RegisterValue? {
         let scanner = Scanner(string: string)
         // Scan past any hex-flag prefix
@@ -87,11 +97,13 @@ enum HexFlag: String, CaseIterable {
 }
 
 // MARK: - RegisterValue
+/// The basic numeric/address value type.
 typealias RegisterValue = UInt32
 extension RegisterValue: ValueRepresentation {
     static let zero = RegisterValue(0)
 
     var lessThanZero: Bool { return false }
+    /// Splat the value into four unsigned bytes
     var bytes: [UInt8] {
         var retval: [UInt8] = []
         var cursor = self
@@ -104,6 +116,7 @@ extension RegisterValue: ValueRepresentation {
         return retval
     }
 
+    /// Splat the value into two unsigned shorts (2 bytes)
     var shorts: [UInt16] {
         var retval: [UInt16] = []
         var cursor = self
