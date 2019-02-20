@@ -18,6 +18,13 @@ struct StatusFlags: OptionSet {
 
 }
 
+// TODO: What's the best way to address, read, and set registers?
+enum RegisterNames {
+    case d0, d1, d2, d3, d4, d5, d6, d7
+    case a0, a1, a2, a3, a4, a5, a6, a7
+    case pc
+}
+
 class Processor {
     let memory: Memory
     let memoryCapacity: RegisterValue
@@ -38,6 +45,15 @@ class Processor {
         addressRegisters = addrs
         dataRegisters = datas
     }
+
+    var d0: RegisterValue { return dataRegisters[0].value }
+    var d1: RegisterValue { return dataRegisters[1].value }
+    var d2: RegisterValue { return dataRegisters[2].value }
+    var d3: RegisterValue { return dataRegisters[3].value }
+    var d4: RegisterValue { return dataRegisters[4].value }
+    var d5: RegisterValue { return dataRegisters[5].value }
+    var d6: RegisterValue { return dataRegisters[6].value }
+    var d7: RegisterValue { return dataRegisters[7].value }
 }
 
 
