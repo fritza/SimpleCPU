@@ -89,6 +89,8 @@ enum HexFlag: String, CaseIterable {
 // MARK: - RegisterValue
 typealias RegisterValue = UInt32
 extension RegisterValue: ValueRepresentation {
+    static let zero = RegisterValue(0)
+
     var lessThanZero: Bool { return false }
     var bytes: [UInt8] {
         var retval: [UInt8] = []

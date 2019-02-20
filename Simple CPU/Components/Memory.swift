@@ -12,6 +12,7 @@ import Foundation
 // * It matches the printed representation of registers
 // * It's less vulnerable to the bug of casting wide types into narrow by fetching only the first byte.
 
+@dynamicCallable
 class Memory {
     enum Errors: Error {
         case alignment(UInt32)
@@ -25,6 +26,23 @@ class Memory {
     func byte(at address: RegisterValue) throws -> RegisterValue {
         guard address < size else { throw Errors.access(address) }
         return RegisterValue(data[Int(address)])
+    }
+
+    func dynamicallyCall(
+        withKeywordArguments args: KeyValuePairs<String, RegisterValue>)
+        throws -> RegisterValue
+    {
+        var base, index, offset: RegisterValue
+        (base, index, offset) = (.zero, .zero, .zero)
+        for arg in args {
+            switch arg.key {
+            case "base":    base = arg.value
+            case "index":   index = arg.value
+            case "offset":  offset = arg.value
+            default: break
+            }
+        }
+        return try byte(at: base + index + offset)
     }
 
     func store(byte: RegisterValue, at address: RegisterValue) throws {
